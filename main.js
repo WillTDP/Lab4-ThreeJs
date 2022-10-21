@@ -19,10 +19,10 @@ const scene = new THREE.Scene();
       const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
       scene.add(ambientLight)
       //add directional light
-      const directionalLight = new THREE.DirectionalLight(0xf5ffff, 5.5);
-      directionalLight.position.x = 2;
-      directionalLight.position.z = 1;
-      directionalLight.position.y = -5;
+      const directionalLight = new THREE.DirectionalLight(0xf5ffff, 10.5);
+      directionalLight.position.x = 120;
+      directionalLight.position.z = 20;
+      directionalLight.position.y = 20;
       scene.add(directionalLight)
       //add directionalLight helper
       const directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight, 2);
@@ -39,19 +39,22 @@ const scene = new THREE.Scene();
       const sphere = new THREE.Mesh( spheregeometry, spherematerial );
       scene.add( sphere );
 
-      const geometry = new THREE.BoxGeometry( 1, 1, 1 );
+      const geometry = new THREE.BoxGeometry( 20, 1, 20);
 			const material = new THREE.MeshLambertMaterial( { color: 0x00fff0 } );
       const cube = new THREE.Mesh( geometry, material );
 			scene.add( cube );
 
 
-			camera.position.z = 5;
+			camera.position.z = 20;
+      camera.position.y = 10;
+      camera.position.x = 5;
+
       
-    /*  //load gltf model
-      let robot;
+    //load gltf model
+      let Tardis;
       const gltfLoader = new GLTFLoader();
-      gltfLoader.load('/models/robot/scene.gltf', (gltf) => {
-        robot = gltf.scene;
+      gltfLoader.load('/models/tardis/TARDIS.glb', (gltf) => {
+        Tardis = gltf.scene; 
         scene.add(gltf.scene);
         //loop over meshes
         gltf.scene.traverse((child) => {
@@ -61,14 +64,19 @@ const scene = new THREE.Scene();
             child.receiveShadow = true;
           }
         });
-      });*/
+        //posistion tardis
+        Tardis.position.y = 4;
+        Tardis.position.z = 6;
+        Tardis.position.x = 6;
+        Tardis.scale.set(0.5, 0.5, 0.5);
+      });
+   
 
 
 			function animate() {
 				requestAnimationFrame( animate );
 
-       /* cube.rotation.x += 0.01;
-				cube.rotation.y += 0.05;*/
+        //Tardis.rotation.y += 0.01;
 
 
         controls.update();
