@@ -16,32 +16,68 @@ const scene = new THREE.Scene();
       //controls.enableDamping = true;
 
 			//add ambient light
-      const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.8); 
       scene.add(ambientLight)
-      //add directional light
-      const directionalLight = new THREE.DirectionalLight(0xf5ffff, 10.5);
-      directionalLight.position.x = 120;
-      directionalLight.position.z = 20;
-      directionalLight.position.y = 20;
-      scene.add(directionalLight)
-      //add directionalLight helper
-      const directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight, 2);
-      scene.add(directionalLightHelper)
+      //add Spot light
+      const spotLight = new THREE.SpotLight(0xcfeaff, 50 , 300, 1, 1, 2);
+      spotLight.position.x = 270;
+      spotLight.position.z = 60;
+      spotLight.position.y = 95;
+
+      scene.add(spotLight)
+      //add spotLight helper
+      const spotLightHelper = new THREE.SpotLightHelper(spotLight, 2);
+      scene.add(spotLightHelper)
+
+      //add Space Point light
+      const SpacespotLight = new THREE.PointLight(0xfffff, 5, 200 , 2);
+      SpacespotLight.position.x = 275;
+      SpacespotLight.position.z = 60;
+      SpacespotLight.position.y = 95;
+      scene.add(SpacespotLight)
+      //shadow stuff
+      SpacespotLight.shadow.mapSize.width = 512; // default
+      SpacespotLight.shadow.mapSize.height = 512; // default
+      SpacespotLight.shadow.camera.near = 0.5; // default
+      SpacespotLight.shadow.camera.far = 500; // default
+      //add spotLight helper
+      const SpacespotLightHelper = new THREE.PointLightHelper(SpacespotLight, 2);
+      scene.add(SpacespotLightHelper)
+
+
+            //add yellow Point light
+            const yellowspotLight = new THREE.PointLight(0xffd966, 5, 10, 2);
+            yellowspotLight.position.x = 16;
+            yellowspotLight.position.z = 16;
+            yellowspotLight.position.y = 8;
+            yellowspotLight.castShadow = true; // default false
+            scene.add(yellowspotLight)
+            //shadow stuff
+            yellowspotLight.shadow.mapSize.width = 512; // default
+            yellowspotLight.shadow.mapSize.height = 512; // default
+            yellowspotLight.shadow.camera.near = 0.5; // default
+            yellowspotLight.shadow.camera.far = 500; // default
+            //add spotLight helper
+            const yellowspotLightHelper = new THREE.PointLightHelper(yellowspotLight, 2);
+            scene.add(yellowspotLightHelper)
 
       //add sphere
       //load texture
       const textureLoader = new THREE.TextureLoader();
-      const SPACETexture = textureLoader.load('/textures/galaxy.webp');
-      const spheregeometry = new THREE.SphereGeometry( 150, 32, 32 );
+      const SPACETexture = textureLoader.load('/textures/galaxy.png');
+      const spheregeometry = new THREE.SphereGeometry( 300, 64, 64 );
       const spherematerial = new THREE.MeshLambertMaterial( { color: 0x00fff0 } );
       spherematerial.map = SPACETexture;
       spherematerial.side = BackSide;
       const sphere = new THREE.Mesh( spheregeometry, spherematerial );
       scene.add( sphere );
 
-      const geometry = new THREE.BoxGeometry( 20, 1, 20);
-			const material = new THREE.MeshLambertMaterial( { color: 0x00fff0 } );
-      const cube = new THREE.Mesh( geometry, material );
+      const geometry = new THREE.BoxGeometry( 80, 1, 80);
+      const FloorTexture = textureLoader.load('/textures/stone.jpg');
+			const cubematerial = new THREE.MeshLambertMaterial( { color: 0x00fff0 } );
+      const cube = new THREE.Mesh( geometry, cubematerial );
+      cubematerial.map = FloorTexture;
+      cube.receiveShadow = true;
 			scene.add( cube );
 
 
@@ -51,10 +87,10 @@ const scene = new THREE.Scene();
 
       
     //load gltf model
-      let Tardis;
+      let BlueBox;
       const gltfLoader = new GLTFLoader();
-      gltfLoader.load('/models/tardis/TARDIS.glb', (gltf) => {
-        Tardis = gltf.scene; 
+      gltfLoader.load('/models/BlueBox/BlueBox.glb', (gltf) => {
+        BlueBox = gltf.scene; 
         scene.add(gltf.scene);
         //loop over meshes
         gltf.scene.traverse((child) => {
@@ -64,11 +100,11 @@ const scene = new THREE.Scene();
             child.receiveShadow = true;
           }
         });
-        //posistion tardis
-        Tardis.position.y = 4;
-        Tardis.position.z = 6;
-        Tardis.position.x = 6;
-        Tardis.scale.set(0.5, 0.5, 0.5);
+        //posistion BlueBox
+        BlueBox.position.y = 4;
+        BlueBox.position.z = 16;
+        BlueBox.position.x = 16;
+        BlueBox.scale.set(0.5, 0.5, 0.5);
       });
    
 
@@ -76,7 +112,7 @@ const scene = new THREE.Scene();
 			function animate() {
 				requestAnimationFrame( animate );
 
-        //Tardis.rotation.y += 0.01;
+        BlueBox.rotation.y += 0.01;
 
 
         controls.update();
@@ -85,13 +121,3 @@ const scene = new THREE.Scene();
 			};
 
 			animate();
-
-      document.querySelector(".recolor").addEventListener("click", () => {
-        //loop over meshes
-        robot.traverse((child) => {
-          if(child.isMesh){
-            //change material colour
-            child.material.color.set(0x00ff00);
-          }
-        });
-      });
