@@ -5,7 +5,14 @@ import { BackSide } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 
 const scene = new THREE.Scene();
-			const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+			const camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.1, 1000 );
+    
+      
+			camera.position.z = 10;
+      camera.position.y = 10;
+      camera.position.x = -50;
+      camera.rotation.y = 50;
+ 
 
 			const renderer = new THREE.WebGLRenderer();
 			renderer.setSize( window.innerWidth, window.innerHeight );
@@ -61,6 +68,9 @@ const scene = new THREE.Scene();
             const yellowspotLightHelper = new THREE.PointLightHelper(yellowspotLight, 2);
             scene.add(yellowspotLightHelper)
 
+
+
+      
       //add sphere
       //load texture
       const textureLoader = new THREE.TextureLoader();
@@ -72,6 +82,7 @@ const scene = new THREE.Scene();
       const sphere = new THREE.Mesh( spheregeometry, spherematerial );
       scene.add( sphere );
 
+      //add floor
       const geometry = new THREE.BoxGeometry( 80, 1, 80);
       const FloorTexture = textureLoader.load('/textures/stone.jpg');
 			const cubematerial = new THREE.MeshLambertMaterial( { color: 0x00fff0 } );
@@ -80,11 +91,51 @@ const scene = new THREE.Scene();
       cube.receiveShadow = true;
 			scene.add( cube );
 
+      //add wall 1
+      const wall1geometry = new THREE.BoxGeometry( 1, 10, 20);
+      const wall1material = new THREE.MeshLambertMaterial( { color: 0x00fff0 } );
+      const wall1 = new THREE.Mesh( wall1geometry, wall1material );
+      let wallTexture = textureLoader.load('/textures/woodenplanks.jpg');
+      wall1material.map = wallTexture;
+      wall1.position.x = -38;
+      wall1.position.y = 5;
+      wall1.position.z = -20;
+      wall1.receiveShadow = true;
+      scene.add( wall1 );
 
-			camera.position.z = 20;
-      camera.position.y = 10;
-      camera.position.x = 5;
+      //add wall 2
+      const wall2geometry = new THREE.BoxGeometry( 1, 10, 20);
+      const wall2material = new THREE.MeshLambertMaterial( { color: 0x00fff0 } );
+      const wall2 = new THREE.Mesh( wall2geometry, wall2material );
+      wall2material.map = wallTexture;
+      wall2.position.x = -28;
+      wall2.position.y = 5;
+      wall2.position.z = -20;
+      wall2.receiveShadow = true;
+      scene.add( wall2 );
 
+      //add wall 3 rotated 90 degrees
+      const wall3geometry = new THREE.BoxGeometry( 1, 10, 10);
+      const wall3material = new THREE.MeshLambertMaterial( { color: 0x00fff0 } );
+      const wall3 = new THREE.Mesh( wall3geometry, wall3material );
+      wall3material.map = wallTexture;
+      wall3.position.x = -33;
+      wall3.position.y = 5;
+      wall3.position.z = -30;
+      wall3.rotation.y = 1.5708;
+      wall3.receiveShadow = true;
+      scene.add( wall3 );
+      //add roof
+      const roofgeometry = new THREE.BoxGeometry( 15, 1, 20);
+      const roofmaterial = new THREE.MeshLambertMaterial( { color: 0x00fff0 } );
+      const roof = new THREE.Mesh( roofgeometry, roofmaterial );
+      let roofTexture = textureLoader.load('/textures/rooftiles.jpg');
+      roofmaterial.map = roofTexture;
+      roof.position.x = -33;
+      roof.position.y = 10.5;
+      roof.position.z = -20;
+      roof.receiveShadow = true;
+      scene.add( roof );
       
     //load gltf model
       let BlueBox;
@@ -113,7 +164,7 @@ const scene = new THREE.Scene();
 				requestAnimationFrame( animate );
 
         BlueBox.rotation.y += 0.01;
-
+        
 
         controls.update();
         
