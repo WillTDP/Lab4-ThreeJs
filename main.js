@@ -26,7 +26,7 @@ const scene = new THREE.Scene();
       const ambientLight = new THREE.AmbientLight(0xffffff, 0.8); 
       scene.add(ambientLight)
       //add Spot light
-      const spotLight = new THREE.SpotLight(0xcfeaff, 50 , 300, 1, 1, 2);
+      const spotLight = new THREE.SpotLight(0xcfeaff, 60 , 300, 1, 1, 2);
       spotLight.position.x = 270;
       spotLight.position.z = 60;
       spotLight.position.y = 95;
@@ -53,7 +53,7 @@ const scene = new THREE.Scene();
 
 
             //add yellow Point light
-            const yellowspotLight = new THREE.PointLight(0xffd966, 5, 10, 2);
+            const yellowspotLight = new THREE.PointLight(0xffd966, 5, 12, 2);
             yellowspotLight.position.x = 16;
             yellowspotLight.position.z = 16;
             yellowspotLight.position.y = 8;
@@ -68,6 +68,22 @@ const scene = new THREE.Scene();
             const yellowspotLightHelper = new THREE.PointLightHelper(yellowspotLight, 2);
             scene.add(yellowspotLightHelper)
 
+            //add yellow lamp Point light 1
+            const yellowlampspotLight1 = new THREE.PointLight(0xFCE65F, 5, 75, 2);
+            yellowlampspotLight1.position.x = -20;
+            yellowlampspotLight1.position.z = -15;
+            yellowlampspotLight1.position.y = 9;
+            yellowlampspotLight1.castShadow = true; // default false
+            scene.add(yellowlampspotLight1)
+            //shadow stuff
+            yellowlampspotLight1.shadow.mapSize.width = 512; // default
+            yellowlampspotLight1.shadow.mapSize.height = 512; // default
+            yellowlampspotLight1.shadow.camera.near = 0.5; // default
+            yellowlampspotLight1.shadow.camera.far = 500; // default
+            //add spotLight helper
+            const yellowlampspotLight1Helper = new THREE.PointLightHelper(yellowlampspotLight1, 2);
+            scene.add(yellowlampspotLight1Helper)
+
 
 
       
@@ -76,7 +92,7 @@ const scene = new THREE.Scene();
       const textureLoader = new THREE.TextureLoader();
       const SPACETexture = textureLoader.load('/textures/galaxy.png');
       const spheregeometry = new THREE.SphereGeometry( 300, 64, 64 );
-      const spherematerial = new THREE.MeshLambertMaterial( { color: 0x00fff0 } );
+      const spherematerial = new THREE.MeshLambertMaterial( { color: 0xffffff  } );
       spherematerial.map = SPACETexture;
       spherematerial.side = BackSide;
       const sphere = new THREE.Mesh( spheregeometry, spherematerial );
@@ -85,7 +101,7 @@ const scene = new THREE.Scene();
       //add floor
       const geometry = new THREE.BoxGeometry( 80, 1, 80);
       const FloorTexture = textureLoader.load('/textures/stone.jpg');
-			const cubematerial = new THREE.MeshLambertMaterial( { color: 0x00fff0 } );
+			const cubematerial = new THREE.MeshLambertMaterial( { color: 0xbcbcbc } );
       const cube = new THREE.Mesh( geometry, cubematerial );
       cubematerial.map = FloorTexture;
       cube.receiveShadow = true;
@@ -93,7 +109,7 @@ const scene = new THREE.Scene();
 
       //add wall 1
       const wall1geometry = new THREE.BoxGeometry( 1, 10, 20);
-      const wall1material = new THREE.MeshLambertMaterial( { color: 0x00fff0 } );
+      const wall1material = new THREE.MeshLambertMaterial( { color: 0xbf9000 } );
       const wall1 = new THREE.Mesh( wall1geometry, wall1material );
       let wallTexture = textureLoader.load('/textures/woodenplanks.jpg');
       wall1material.map = wallTexture;
@@ -105,7 +121,7 @@ const scene = new THREE.Scene();
 
       //add wall 2
       const wall2geometry = new THREE.BoxGeometry( 1, 10, 20);
-      const wall2material = new THREE.MeshLambertMaterial( { color: 0x00fff0 } );
+      const wall2material = new THREE.MeshLambertMaterial( { color: 0xbf9000 } );
       const wall2 = new THREE.Mesh( wall2geometry, wall2material );
       wall2material.map = wallTexture;
       wall2.position.x = -28;
@@ -116,7 +132,7 @@ const scene = new THREE.Scene();
 
       //add wall 3 rotated 90 degrees
       const wall3geometry = new THREE.BoxGeometry( 1, 10, 10);
-      const wall3material = new THREE.MeshLambertMaterial( { color: 0x00fff0 } );
+      const wall3material = new THREE.MeshLambertMaterial( { color: 0xbf9000 } );
       const wall3 = new THREE.Mesh( wall3geometry, wall3material );
       wall3material.map = wallTexture;
       wall3.position.x = -33;
@@ -125,6 +141,18 @@ const scene = new THREE.Scene();
       wall3.rotation.y = 1.5708;
       wall3.receiveShadow = true;
       scene.add( wall3 );
+       //add Card
+       const cardgeometry = new THREE.BoxGeometry( 1, 8, 8);
+       const cardmaterial = new THREE.MeshLambertMaterial( { color: 0xE97724 } );
+       const card = new THREE.Mesh( cardgeometry, cardmaterial );
+       let CardTexture = textureLoader.load('/textures/IFD.png');
+       cardmaterial.map = CardTexture;
+       card.position.x = -33;
+       card.position.y = 5;
+       card.position.z = -27;
+       card.rotation.y = 1.5708;
+       card.receiveShadow = true;
+       scene.add( card );
       //add roof
       const roofgeometry = new THREE.BoxGeometry( 15, 1, 20);
       const roofmaterial = new THREE.MeshLambertMaterial( { color: 0x00fff0 } );
@@ -137,7 +165,7 @@ const scene = new THREE.Scene();
       roof.receiveShadow = true;
       scene.add( roof );
       
-    //load gltf model
+    //load BlueBox gltf model
       let BlueBox;
       const gltfLoader = new GLTFLoader();
       gltfLoader.load('/models/BlueBox/BlueBox.glb', (gltf) => {
@@ -158,13 +186,62 @@ const scene = new THREE.Scene();
         BlueBox.scale.set(0.5, 0.5, 0.5);
       });
    
+  
+    //load lantern gltf model
+    let lantern;
+    const gltfLoader2 = new GLTFLoader();
+    gltfLoader2.load('/models/lantern/lantern.glb', (gltf) => {
+      lantern = gltf.scene;
+      scene.add(gltf.scene);
+      //loop over meshes
+      gltf.scene.traverse((child) => {
+        if(child.isMesh){
+          //change material colour
+          child.castShadow = true;
+          child.receiveShadow = true;
+        }
+      });
+      //posistion lantern
+      lantern.position.y = 0.8;
+      lantern.position.z = -15;
+      lantern.position.x = -20;
+      lantern.scale.set(0.02, 0.02, 0.02);
+    });
+
+    //load Pepperpot gltf model
+    let Pepperpot;
+    const PepperpotgltfLoader = new GLTFLoader();
+    PepperpotgltfLoader.load('/models/Pepperpot/Pepperpot.glb', (gltf) => {
+      Pepperpot = gltf.scene; 
+      scene.add(gltf.scene);
+      //loop over meshes
+      gltf.scene.traverse((child) => {
+        if(child.isMesh){
+          //change material colour
+          child.castShadow = true;
+          child.receiveShadow = true;
+        }
+      });
+      //posistion Pepperpot
+      Pepperpot.position.y = 2;
+      Pepperpot.position.z = 0;
+      Pepperpot.position.x = 0;
+      Pepperpot.scale.set(2, 2, 2);
+    });
 
 
 			function animate() {
 				requestAnimationFrame( animate );
 
         BlueBox.rotation.y += 0.01;
-        
+        if(Pepperpot.position.z < 20){
+          Pepperpot.position.z += 0.1;
+        } else if(Pepperpot.position.z = 20){
+          Pepperpot.rotation.y += 0.01;
+        } else if(Pepperpot.rotation.y = 25){
+          Pepperpot.position.x += 0.1;
+        }
+
 
         controls.update();
         
