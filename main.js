@@ -228,6 +228,21 @@ const scene = new THREE.Scene();
       Pepperpot.position.x = 0;
       Pepperpot.scale.set(2, 2, 2);
     });
+    // create an AudioListener and add it to the Pepperpot
+    const listener = new THREE.AudioListener();
+    camera.add( listener );
+
+    // create a global audio source
+    const esound = new THREE.Audio( listener );
+
+    
+  // load a sound and set it as the Audio object's buffer
+  const audioLoader = new THREE.AudioLoader();
+  audioLoader.load( 'audio/exterminate.mp3', function( buffer ) {
+	  esound.setBuffer( buffer );
+	  esound.setLoop( true );
+	  esound.setVolume( 0.5 );
+  });
 
 
 			function animate() {
@@ -237,10 +252,18 @@ const scene = new THREE.Scene();
         if(Pepperpot.position.z < 20){
           Pepperpot.position.z += 0.1;
         } else if(Pepperpot.position.z = 20){
-          Pepperpot.rotation.y += 0.01;
-        } else if(Pepperpot.rotation.y = 25){
+          if(Pepperpot.rotation.y < 1.3){
+            Pepperpot.rotation.y += 0.01;
+          } else if(Pepperpot.rotation.y = 1.5){
+            if(Pepperpot.position.x < 15){
+              Pepperpot.position.x += 0.1;
+            } else if (Pepperpot.position.x = 15){
+              esound.play();
+            }
+        }}
+        /*else if(Pepperpot.rotation.y = 25){
           Pepperpot.position.x += 0.1;
-        }
+        }*/
 
 
         controls.update();
