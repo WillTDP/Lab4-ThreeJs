@@ -207,6 +207,26 @@ const scene = new THREE.Scene();
       lantern.position.x = -20;
       lantern.scale.set(0.02, 0.02, 0.02);
     });
+    //load lantern gltf model
+    let doughnut;
+    const gltfLoader3 = new GLTFLoader();
+    gltfLoader3.load('/models/donut/myfirstdonut.glb', (gltf) => {
+      doughnut = gltf.scene;
+      scene.add(gltf.scene);
+      //loop over meshes
+      gltf.scene.traverse((child) => {
+        if(child.isMesh){
+          //change material colour
+          child.castShadow = true;
+          child.receiveShadow = true;
+        }
+      });
+      //posistion doughnut
+      doughnut.position.y = 1;
+      doughnut.position.z = -22;
+      doughnut.position.x = -33;
+      doughnut.scale.set(10, 10, 10);
+    });
 
     //load Pepperpot gltf model
     let Pepperpot;
