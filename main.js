@@ -268,23 +268,7 @@ const scene = new THREE.Scene();
 			function animate() {
 				requestAnimationFrame( animate );
 
-        BlueBox.rotation.y += 0.01;
-        if(Pepperpot.position.z < 20){
-          Pepperpot.position.z += 0.1;
-        } else if(Pepperpot.position.z = 20){
-          if(Pepperpot.rotation.y < 1.3){
-            Pepperpot.rotation.y += 0.01;
-          } else if(Pepperpot.rotation.y = 1.5){
-            if(Pepperpot.position.x < 15){
-              Pepperpot.position.x += 0.1;
-            } else if (Pepperpot.position.x = 15){
-              esound.play();
-            }
-        }}
-        /*else if(Pepperpot.rotation.y = 25){
-          Pepperpot.position.x += 0.1;
-        }*/
-
+       
 
         controls.update();
         
