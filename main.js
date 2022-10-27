@@ -168,7 +168,7 @@ const scene = new THREE.Scene();
     //load BlueBox gltf model
       let BlueBox;
       const gltfLoader = new GLTFLoader();
-      gltfLoader.load('/models/BlueBox/BlueBox.glb', (gltf) => {
+      gltfLoader.load('/models/BlueBox.glb', (gltf) => {
         BlueBox = gltf.scene; 
         scene.add(gltf.scene);
         //loop over meshes
@@ -190,7 +190,7 @@ const scene = new THREE.Scene();
     //load lantern gltf model
     let lantern;
     const gltfLoader2 = new GLTFLoader();
-    gltfLoader2.load('/models/lantern/lantern.glb', (gltf) => {
+    gltfLoader2.load('/models/lantern.glb', (gltf) => {
       lantern = gltf.scene;
       scene.add(gltf.scene);
       //loop over meshes
@@ -210,7 +210,7 @@ const scene = new THREE.Scene();
     //load lantern gltf model
     let doughnut;
     const gltfLoader3 = new GLTFLoader();
-    gltfLoader3.load('/models/donut/myfirstdonut.glb', (gltf) => {
+    gltfLoader3.load('/models/myfirstdonut.glb', (gltf) => {
       doughnut = gltf.scene;
       scene.add(gltf.scene);
       //loop over meshes
@@ -231,7 +231,7 @@ const scene = new THREE.Scene();
     //load Pepperpot gltf model
     let Pepperpot;
     const PepperpotgltfLoader = new GLTFLoader();
-    PepperpotgltfLoader.load('/models/Pepperpot/Pepperpot.glb', (gltf) => {
+    PepperpotgltfLoader.load('/models/pepperpot.glb', (gltf) => {
       Pepperpot = gltf.scene; 
       scene.add(gltf.scene);
       //loop over meshes
